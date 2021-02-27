@@ -24,12 +24,16 @@ Auth::routes();
 
 Route::any('/', [MainContoller::class, 'index']);
 
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function(){
-    Route::get('/', [AdminController::class, 'index']);
-    Route::resource('/users', UserController::class);
+Route::group(['middleware' => 'auth'],function () {
 
-});
-Route::middleware(['auth'])->prefix('profile')->group(function(){
-    Route::resource('/user', ProfileController::class);
+    Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function(){
+        Route::get('/', [AdminController::class, 'index']);
+        Route::resource('/users', UserController::class);
 
+    });
+    Route::middleware(['auth'])->prefix('profile')->group(function(){
+        Route::resource('/user', ProfileController::class);
+
+    });
 });
+

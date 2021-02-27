@@ -22,6 +22,7 @@
                 <td>Имя</td>
                 <td>Мыло</td>
                 <td>Статус</td>
+                {{-- <td>Роль</td> --}}
                 <td>Редактирование</td>
             </tr>
         </thead>
@@ -29,11 +30,11 @@
             @foreach ($users as $user)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td><img src="{{asset("$user->avatar")}}" width="100" alt=""></td>
+                    <td><img src="{{asset("storage/$user->avatar")}}" width="100" alt=""></td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->ban->name}}</td>
-                    {{-- <td>{{ $user->roles }}</td> --}}
+                    <td>{{ $user->user_roles }}</td>
                     <td>
                         <a href="{{ url('/admin/users/'.$user->id.'/edit') }}">
                             <button class="btn btn-primary">

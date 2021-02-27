@@ -19,6 +19,11 @@
     <div class="invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
+{{-- {{ $role->name }} --}}
+<div class="form-group">
+    {!! Form::label('roles', 'Назначить роль:') !!}
+    {!! Form::select('roles', $roles, null, ['class' =>'form-control'] )!!}
+</div>
 
 @if (!$user->hasRole('admin'))
 <div class="form-group">

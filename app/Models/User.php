@@ -55,4 +55,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Ban::class);
     }
+
+
+    //
+    public function getUserRolesAttribute()
+    {
+        return $this->roles->pluck('slug')->join(',');
+    }
 }

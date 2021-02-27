@@ -15,10 +15,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index()
     {
         $users = User::with('ban')->get();
         return view('admin.users.index', compact('users'));
+
     }
 
     /**
@@ -63,8 +64,8 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $bans = Ban::all()->pluck('name', 'id');
-
-        return view('admin.users.edit', compact('user','bans'));
+        $roles = Role::all()->pluck('slug','id');
+        return view('admin.users.edit', compact('user','bans','roles'));
 
     }
 
@@ -84,6 +85,10 @@ class UserController extends Controller
         $request->ban !== null ? $user->ban_id = $request->ban : '';
 
         $user->save();
+
+        //
+        $user->roles()->sync($request->roles);
+
         return redirect('/admin/users')->with('success', 'Информация о пользователе была обновлена');
     }
 
